@@ -27,6 +27,7 @@ function referenciarElementos() {
     elementos.categoriaSelect = document.getElementById('categoria-select');
     elementos.plantillasList = document.getElementById('plantillas-list');
     elementos.formContainer = document.getElementById('form-container');
+    elementos.camposWarning = document.getElementById('campos-warning');
     elementos.btnGenerarPrompt = document.getElementById('btn-generar-prompt');
     elementos.promptPreview = document.getElementById('prompt-preview');
 
@@ -73,6 +74,7 @@ async function iniciarSesionGoogle() {
         return;
     }
 
+    elementos.googleLoginBtn.disabled = true;
     const provider = new firebase.auth.GoogleAuthProvider();
     try {
         const resultado = await window.auth.signInWithPopup(provider);
@@ -80,6 +82,8 @@ async function iniciarSesionGoogle() {
     } catch (error) {
         console.error('Error en autenticación con Google:', error);
         mostrarErrorAuth('No se pudo completar el inicio de sesión.');
+    } finally {
+        elementos.googleLoginBtn.disabled = false;
     }
 }
 
@@ -121,6 +125,8 @@ async function cerrarSesion() {
 async function cargarPlantillas() {
     if (!window.db) return;
 
+    elementos.plantillasList.innerHTML = '<p class="loading-message">Cargando plantillas...</p>';
+
     try {
         const snapshot = await window.db.collection('plantillas').orderBy('categoria').get();
 
@@ -137,6 +143,12 @@ async function cargarPlantillas() {
                 promptTemplate: data.promptTemplate || ''
             });
         });
+
+        if (plantillas.length === 0) {
+            elementos.plantillasList.innerHTML = '<p class="empty-message">Aún no hay plantillas disponibles.</p>';
+            elementos.categoriaSelect.innerHTML = '<option value="">Sin categorías</option>';
+            return;
+        }
 
         cargarCategorias();
     } catch (error) {
@@ -214,8 +226,9 @@ function renderizarFormularioPlantilla(plantilla) {
         if (campo.tipo === 'textarea') {
             html += `<textarea id="campo-${escaparHTML(campo.nombre)}" data-campo="${escaparHTML(campo.nombre)}" placeholder="${escaparHTML(campo.placeholder || '')}">${escaparHTML(valor)}</textarea>`;
         } else if (campo.tipo === 'select') {
+            const opciones = Array.isArray(campo.opciones) ? campo.opciones : [];
             html += `<select id="campo-${escaparHTML(campo.nombre)}" data-campo="${escaparHTML(campo.nombre)}">`;
-            campo.opciones.forEach(opcion => {
+            opciones.forEach(opcion => {
                 const selected = opcion === valor ? 'selected' : '';
                 html += `<option value="${escaparHTML(opcion)}" ${selected}>${escaparHTML(opcion)}</option>`;
             });
@@ -227,23 +240,30 @@ function renderizarFormularioPlantilla(plantilla) {
         html += `</div>`;
     });
 
-    elementos.formContainer.innerHTML = html;
+    elementos.formContainer.innerHTML = html || '<p class="empty-message">Esta plantilla no tiene campos configurados.</p>';
 
-    // Limpiar prompt anterior
-    elementos.promptPreview.textContent = '';
+    // Limpiar prompt y avisos anteriores
+    elementos.promptPreview.innerHTML = '<p class="empty-message">El prompt aparecerá aquí...</p>';
+    ocultarAvisoCampos();
 }
 
 // ==================== GENERACIÓN DE PROMPT ====================
 function generarPrompt() {
     if (!plantillaSeleccionada) {
-        elementos.promptPreview.textContent = 'Selecciona una plantilla primero.';
+        elementos.promptPreview.innerHTML = '<p class="empty-message">Selecciona una plantilla primero.</p>';
         return;
     }
 
     const valores = {};
+    const camposVacios = [];
     const inputs = elementos.formContainer.querySelectorAll('[data-campo]');
     inputs.forEach(input => {
-        valores[input.dataset.campo] = input.value.trim();
+        const valor = input.value.trim();
+        valores[input.dataset.campo] = valor;
+        if (!valor) {
+            const label = elementos.formContainer.querySelector(`label[for="${input.id}"]`);
+            camposVacios.push(label ? label.textContent : input.dataset.campo);
+        }
     });
 
     let prompt = plantillaSeleccionada.promptTemplate || '';
@@ -255,6 +275,24 @@ function generarPrompt() {
     });
 
     elementos.promptPreview.textContent = prompt;
+
+    if (camposVacios.length > 0) {
+        mostrarAvisoCampos(`Dejaste vacío: ${camposVacios.join(', ')}. El prompt puede quedar incompleto.`);
+    } else {
+        ocultarAvisoCampos();
+    }
+}
+
+function mostrarAvisoCampos(mensaje) {
+    if (!elementos.camposWarning) return;
+    elementos.camposWarning.textContent = mensaje;
+    elementos.camposWarning.style.display = 'block';
+}
+
+function ocultarAvisoCampos() {
+    if (!elementos.camposWarning) return;
+    elementos.camposWarning.textContent = '';
+    elementos.camposWarning.style.display = 'none';
 }
 
 // ==================== ACCIONES ====================
@@ -279,11 +317,19 @@ function copiarPrompt() {
 function fallbackCopiar(texto) {
     const textarea = document.createElement('textarea');
     textarea.value = texto;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
     document.body.appendChild(textarea);
     textarea.select();
-    document.execCommand('copy');
-    document.body.removeChild(textarea);
-    alert('Prompt copiado al portapapeles.');
+    try {
+        document.execCommand('copy');
+        alert('Prompt copiado al portapapeles.');
+    } catch (error) {
+        console.error('No se pudo copiar el prompt:', error);
+        alert('No se pudo copiar automáticamente. Selecciona y copia el texto manualmente.');
+    } finally {
+        document.body.removeChild(textarea);
+    }
 }
 
 function descargarPrompt() {
@@ -336,8 +382,9 @@ function configurarEventos() {
         const categoria = elementos.categoriaSelect.value;
         if (categoria) {
             plantillaSeleccionada = null;
-            elementos.formContainer.innerHTML = '<p style="color: var(--texto-mutado);">Selecciona una plantilla para comenzar.</p>';
-            elementos.promptPreview.textContent = '';
+            elementos.formContainer.innerHTML = '<p class="empty-message">Selecciona una plantilla para comenzar.</p>';
+            elementos.promptPreview.innerHTML = '<p class="empty-message">El prompt aparecerá aquí...</p>';
+            ocultarAvisoCampos();
             mostrarPlantillasPorCategoria(categoria);
         }
     });
