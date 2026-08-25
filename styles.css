@@ -1,6 +1,5 @@
 
 
-
 /* ============================================================
    PROMPTCRAFT — ESTILOS FUTURISTAS Y MODERNOS (GLASS & NEON HUD)
    ============================================================ */
@@ -18,6 +17,7 @@
   --cyan-neon: #00f0ff;
   --violet-neon: #7000ff;
   --magenta-neon: #ff007a;
+  --amber-warning: #ffb020;
   --gradiente-principal: linear-gradient(135deg, #00f0ff 0%, #7000ff 50%, #ff007a 100%);
   --gradiente-hover: linear-gradient(135deg, #33f3ff 0%, #8b26ff 50%, #ff3395 100%);
 
@@ -226,6 +226,7 @@ body {
   color: var(--texto-mutado);
   cursor: not-allowed;
   box-shadow: none;
+  transform: none;
 }
 
 .google-btn {
@@ -283,7 +284,8 @@ body {
   align-items: center;
 }
 
-.preview-panel h2 {
+.preview-panel h2,
+.panel-title {
   font-family: 'Space Grotesk', sans-serif;
   font-size: 1.25rem;
   width: 100%;
@@ -494,12 +496,43 @@ input[type="file"] {
   color: var(--texto-mutado);
 }
 
-/* --- MENSAJES DE CARGA / VACÍO --- */
+/* --- MENSAJES DE CARGA / VACÍO / AVISO --- */
 .empty-message {
   color: var(--texto-mutado);
   text-align: center;
   padding: 20px;
   font-size: 0.9rem;
+}
+
+.loading-message {
+  color: var(--texto-secundario);
+  text-align: center;
+  padding: 20px;
+  font-size: 0.9rem;
+  position: relative;
+}
+
+.loading-message::after {
+  content: "";
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin-left: 8px;
+  border: 2px solid var(--border-glass);
+  border-top-color: var(--cyan-neon);
+  border-radius: 50%;
+  vertical-align: middle;
+  animation: girar 0.7s linear infinite;
+}
+
+.campos-warning {
+  background: rgba(255, 176, 32, 0.1);
+  border: 1px solid var(--amber-warning);
+  color: var(--amber-warning);
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 0.8rem;
+  margin-top: 12px;
 }
 
 /* --- CONTENEDOR DE VISTA PREVIA QR (heredado de StylishQR) --- */
@@ -634,6 +667,12 @@ input[type="file"] {
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
   }
 }
 
