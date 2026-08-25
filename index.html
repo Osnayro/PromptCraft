@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="PromptCraft — genera prompts profesionales para interactuar con modelos de IA en distintos casos y situaciones.">
     <title>PromptCraft — Generador de Prompts para IA</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="manifest" href="manifest.json">
@@ -15,6 +16,8 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <noscript>Esta aplicación requiere JavaScript para funcionar.</noscript>
+
     <!-- ============================================================ -->
     <!-- PANTALLA DE AUTENTICACIÓN CON GOOGLE -->
     <!-- ============================================================ -->
@@ -52,7 +55,7 @@
         <main class="main-content">
             <!-- Columna izquierda: selector y formulario -->
             <section class="form-panel">
-                <h2 style="font-family:'Space Grotesk', sans-serif; color: var(--cyan-neon); margin-bottom: 16px;">📚 Plantillas</h2>
+                <h2 class="panel-title">📚 Plantillas</h2>
 
                 <!-- Selector de categoría -->
                 <div class="form-group">
@@ -64,13 +67,16 @@
 
                 <!-- Lista de plantillas de la categoría -->
                 <div id="plantillas-list" class="plantillas-list">
-                    <!-- Se llena dinámicamente desde app.js -->
+                    <p class="loading-message">Cargando plantillas...</p>
                 </div>
 
                 <!-- Formulario dinámico de la plantilla seleccionada -->
                 <div id="form-container" class="form-container">
-                    <p style="color: var(--texto-mutado);">Selecciona una plantilla para comenzar.</p>
+                    <p class="empty-message">Selecciona una plantilla para comenzar.</p>
                 </div>
+
+                <!-- Aviso de campos vacíos -->
+                <div id="campos-warning" class="campos-warning" role="alert" style="display:none;"></div>
 
                 <!-- Botón para generar prompt -->
                 <button id="btn-generar-prompt" class="main-btn" style="margin-top: 16px;">
@@ -83,7 +89,7 @@
                 <h2>✨ Prompt generado</h2>
 
                 <div id="prompt-preview" class="prompt-preview">
-                    <p style="color: var(--texto-mutado);">El prompt aparecerá aquí...</p>
+                    <p class="empty-message">El prompt aparecerá aquí...</p>
                 </div>
 
                 <button id="btn-copy-prompt" class="main-btn">📋 Copiar prompt</button>
