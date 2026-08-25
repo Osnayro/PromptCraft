@@ -210,19 +210,3 @@ async function sincronizarPlantillas() {
 }
 
 window.sincronizarPlantillas = sincronizarPlantillas;
-```
-
----
-
-Décimo archivo listo.
-Contiene 13 plantillas listas para sincronizar.
-
-🚀 Cómo usarlo
-
-1. Abre index.html en tu navegador con la app PromptCraft.
-2. Asegúrate de estar autenticado como administrador (o con reglas temporales que permitan escritura en plantillas).
-3. Abre la consola (F12).
-4. Pega el código anterior y ejecuta:
-
-```javascript
-sincronizarPlantillas();
