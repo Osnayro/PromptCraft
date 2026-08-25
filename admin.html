@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="robots" content="noindex, nofollow">
     <title>PromptCraft — Administración</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
@@ -53,7 +54,7 @@
 
             <!-- Lista de usuarios -->
             <div id="users-list" class="admin-users-list">
-                <!-- Los usuarios se cargarán desde Firestore -->
+                <p class="loading-message">Cargando usuarios...</p>
             </div>
 
             <button id="btn-refresh-users" type="button" class="secondary-btn">Actualizar lista</button>
@@ -72,7 +73,7 @@
     <!-- Configuración Firebase -->
     <script src="firebase-config.js"></script>
 
-    <!-- Lógica de administración -->
+    <!-- Lógica de administración (antes subida por error como "adnin.js") -->
     <script src="admin.js"></script>
 </body>
 </html>
