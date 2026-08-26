@@ -2,9 +2,14 @@
  * PromptCraft — Seed de Plantillas para Firestore
  * Ejecuta sincronizarPlantillas() en la consola del navegador
  * después de cargar firebase-config.js y tener reglas que permitan escritura.
+ *
+ * v2: se agregaron campos de rigor técnico (unidades, supuestos) a las
+ * plantillas de cálculo/ingeniería, y 15 plantillas nuevas enfocadas en
+ * ingeniería, operaciones industriales, seguridad y gestión de proyectos.
  */
 
 const plantillasSeed = [
+    // ==================== TEXTOS Y COMUNICACIONES ====================
     {
         id: 'resumen-ejecutivo',
         categoria: 'Textos y comunicaciones',
@@ -32,10 +37,11 @@ const plantillasSeed = [
             { nombre: 'area', etiqueta: 'Área', tipo: 'text', placeholder: 'Ingeniería, TI...', valor: '' },
             { nombre: 'normas', etiqueta: 'Normas', tipo: 'text', placeholder: 'ISO 9001', valor: 'ISO 9001' },
             { nombre: 'destinatario', etiqueta: 'Destinatario', tipo: 'text', placeholder: 'Gerente de proyectos', valor: '' },
+            { nombre: 'nivel_detalle', etiqueta: 'Nivel de detalle', tipo: 'select', opciones: ['Ejecutivo (alto nivel)', 'Técnico detallado', 'Extremadamente detallado (paso a paso)'], valor: 'Técnico detallado' },
             { nombre: 'incluir_graficos', etiqueta: '¿Incluir gráficos?', tipo: 'select', opciones: ['Sí', 'No'], valor: 'Sí' },
             { nombre: 'formato', etiqueta: 'Formato', tipo: 'select', opciones: ['Markdown', 'LaTeX', 'Texto plano'], valor: 'Markdown' }
         ],
-        promptTemplate: 'Eres ingeniero senior en {area}. Redacta informe técnico "{titulo}" para {destinatario}. Normas: {normas}. Gráficos: {incluir_graficos}. Formato: {formato}. Incluye antecedentes, metodología, resultados, análisis y conclusiones.'
+        promptTemplate: 'Eres ingeniero senior en {area}. Redacta informe técnico "{titulo}" para {destinatario}. Normas: {normas}. Nivel de detalle: {nivel_detalle}. Gráficos: {incluir_graficos}. Formato: {formato}. Incluye antecedentes, metodología, resultados, análisis y conclusiones. Si falta información relevante, indícalo explícitamente en vez de inventarla.'
     },
     {
         id: 'comunicacion-formal',
@@ -52,6 +58,8 @@ const plantillasSeed = [
         ],
         promptTemplate: 'Redacta una {tipo} con tono {tono} dirigida a {destinatario}. Motivo: {motivo}. Longitud: {longitud}. Incluye saludo, cuerpo claro y despedida formal.'
     },
+
+    // ==================== INGENIERÍA Y CIENCIAS ====================
     {
         id: 'informe-ingenieria',
         categoria: 'Ingeniería y ciencias',
@@ -60,12 +68,14 @@ const plantillasSeed = [
         icono: '🏗️',
         campos: [
             { nombre: 'proyecto', etiqueta: 'Proyecto', tipo: 'text', placeholder: 'Puente peatonal', valor: '' },
-            { nombre: 'especialidad', etiqueta: 'Especialidad', tipo: 'select', opciones: ['Civil', 'Mecánica', 'Eléctrica', 'Software', 'Industrial'], valor: 'Civil' },
+            { nombre: 'especialidad', etiqueta: 'Especialidad', tipo: 'select', opciones: ['Civil', 'Mecánica', 'Eléctrica', 'Software', 'Industrial', 'Procesos/Piping'], valor: 'Civil' },
             { nombre: 'normativa', etiqueta: 'Normativa', tipo: 'text', placeholder: 'Código estructural', valor: '' },
             { nombre: 'entregables', etiqueta: 'Entregables', tipo: 'textarea', placeholder: 'Planos, cálculos...', valor: '' },
+            { nombre: 'unidades', etiqueta: 'Sistema de unidades', tipo: 'select', opciones: ['Sistema Internacional (SI)', 'Sistema Imperial (US)', 'Mixto / según normativa citada'], valor: 'Sistema Internacional (SI)' },
+            { nombre: 'supuestos', etiqueta: 'Si falta información', tipo: 'select', opciones: ['Indicar supuestos explícitamente y marcarlos', 'Detenerme y preguntar antes de asumir'], valor: 'Indicar supuestos explícitamente y marcarlos' },
             { nombre: 'formato', etiqueta: 'Formato', tipo: 'select', opciones: ['Markdown', 'LaTeX', 'Word'], valor: 'Markdown' }
         ],
-        promptTemplate: 'Actúa como ingeniero {especialidad} senior. Genera informe técnico para proyecto "{proyecto}". Normativa: {normativa}. Entregables: {entregables}. Formato: {formato}. Incluye introducción, alcance, metodología, cálculos, resultados y conclusiones.'
+        promptTemplate: 'Actúa como ingeniero {especialidad} senior. Genera informe técnico para proyecto "{proyecto}". Normativa: {normativa}. Entregables: {entregables}. Unidades: {unidades}. Formato: {formato}. Incluye introducción, alcance, metodología, cálculos, resultados y conclusiones. Si falta información crítica: {supuestos}. Cierra con una sección "Supuestos y verificación" que liste los supuestos usados y confirme la consistencia de los resultados.'
     },
     {
         id: 'solicitud-informacion-tecnica',
@@ -91,9 +101,11 @@ const plantillasSeed = [
             { nombre: 'calculo', etiqueta: 'Cálculo', tipo: 'text', placeholder: 'Dimensionamiento de viga', valor: '' },
             { nombre: 'metodologia', etiqueta: 'Metodología', tipo: 'text', placeholder: 'Estados límites', valor: '' },
             { nombre: 'formulas', etiqueta: 'Fórmulas', tipo: 'textarea', placeholder: 'M = wl²/8...', valor: '' },
+            { nombre: 'unidades', etiqueta: 'Sistema de unidades', tipo: 'select', opciones: ['Sistema Internacional (SI)', 'Sistema Imperial (US)', 'Mixto / según normativa citada'], valor: 'Sistema Internacional (SI)' },
+            { nombre: 'supuestos', etiqueta: 'Si falta información', tipo: 'select', opciones: ['Indicar supuestos explícitamente y marcarlos', 'Detenerme y preguntar antes de asumir'], valor: 'Indicar supuestos explícitamente y marcarlos' },
             { nombre: 'formato', etiqueta: 'Formato', tipo: 'select', opciones: ['Markdown', 'LaTeX', 'Word'], valor: 'Markdown' }
         ],
-        promptTemplate: 'Como ingeniero calculista, elabora memoria de cálculo para "{calculo}" con metodología {metodologia}. Fórmulas: {formulas}. Formato: {formato}. Incluye datos, hipótesis, cálculo, resultados y verificación.'
+        promptTemplate: 'Como ingeniero calculista, elabora memoria de cálculo para "{calculo}" con metodología {metodologia}. Fórmulas: {formulas}. Unidades: {unidades}. Formato: {formato}. Desarrolla el cálculo paso a paso: datos, hipótesis, cálculo, resultados. Si falta información crítica: {supuestos}. Cierra con una sección "Supuestos y verificación" que confirme la consistencia dimensional de los resultados.'
     },
     {
         id: 'analisis-causa-raiz',
@@ -105,10 +117,238 @@ const plantillasSeed = [
             { nombre: 'problema', etiqueta: 'Problema', tipo: 'text', placeholder: 'Falla en bomba', valor: '' },
             { nombre: 'metodologia', etiqueta: 'Metodología', tipo: 'select', opciones: ['5 Porqués', 'Ishikawa', 'FMEA'], valor: '5 Porqués' },
             { nombre: 'datos', etiqueta: 'Datos disponibles', tipo: 'textarea', placeholder: 'Fechas, fallas...', valor: '' },
+            { nombre: 'supuestos', etiqueta: 'Si falta información', tipo: 'select', opciones: ['Indicar supuestos explícitamente y marcarlos', 'Detenerme y preguntar antes de asumir'], valor: 'Indicar supuestos explícitamente y marcarlos' },
             { nombre: 'formato', etiqueta: 'Formato', tipo: 'select', opciones: ['Markdown', 'Texto plano'], valor: 'Markdown' }
         ],
-        promptTemplate: 'Actúa como ingeniero de confiabilidad. Realiza ACR para "{problema}" usando {metodologia}. Datos: {datos}. Entrega causa raíz, acciones correctivas y preventivas. Formato: {formato}.'
+        promptTemplate: 'Actúa como ingeniero de confiabilidad. Realiza ACR para "{problema}" usando {metodologia}. Datos: {datos}. Si falta información crítica: {supuestos}. Entrega causa raíz, acciones correctivas y preventivas. Formato: {formato}. Distingue claramente entre hechos confirmados por los datos e hipótesis no verificadas.'
     },
+    {
+        id: 'ficha-tecnica-equipo',
+        categoria: 'Ingeniería y ciencias',
+        titulo: 'Ficha técnica / datasheet de equipo',
+        descripcion: 'Genera una ficha técnica (datasheet) profesional para un equipo industrial.',
+        icono: '🧾',
+        campos: [
+            { nombre: 'equipo', etiqueta: 'Equipo', tipo: 'text', placeholder: 'Bomba centrífuga', valor: '' },
+            { nombre: 'tipo_proceso', etiqueta: 'Proceso donde se usa', tipo: 'text', placeholder: 'Bombeo de agua de enfriamiento', valor: '' },
+            { nombre: 'parametros_operativos', etiqueta: 'Parámetros operativos conocidos', tipo: 'textarea', placeholder: 'Caudal, presión, temperatura...', valor: '' },
+            { nombre: 'normativa', etiqueta: 'Normativa aplicable', tipo: 'text', placeholder: 'API 610', valor: '' },
+            { nombre: 'unidades', etiqueta: 'Sistema de unidades', tipo: 'select', opciones: ['Sistema Internacional (SI)', 'Sistema Imperial (US)'], valor: 'Sistema Internacional (SI)' },
+            { nombre: 'formato', etiqueta: 'Formato', tipo: 'select', opciones: ['Tabla', 'Markdown', 'Word'], valor: 'Tabla' }
+        ],
+        promptTemplate: 'Actúa como ingeniero de especificaciones. Elabora una ficha técnica (datasheet) para {equipo} utilizado en {tipo_proceso}. Parámetros operativos conocidos: {parametros_operativos}. Normativa aplicable: {normativa}. Unidades: {unidades}. Formato: {formato}. Estructura: datos generales, condiciones de diseño y operación, materiales, conexiones, instrumentación asociada y notas. Si falta un dato crítico, márcalo como "Pendiente de definir" en vez de inventarlo.'
+    },
+    {
+        id: 'dimensionamiento-tuberias',
+        categoria: 'Ingeniería y ciencias',
+        titulo: 'Dimensionamiento de tuberías (piping)',
+        descripcion: 'Calcula el dimensionamiento preliminar de una línea de tubería paso a paso.',
+        icono: '🛠️',
+        campos: [
+            { nombre: 'fluido', etiqueta: 'Fluido', tipo: 'text', placeholder: 'Agua, vapor, crudo...', valor: '' },
+            { nombre: 'caudal', etiqueta: 'Caudal', tipo: 'text', placeholder: '50 m³/h', valor: '' },
+            { nombre: 'presion_diseno', etiqueta: 'Presión de diseño', tipo: 'text', placeholder: '10 bar', valor: '' },
+            { nombre: 'material_tuberia', etiqueta: 'Material de tubería', tipo: 'text', placeholder: 'Acero al carbono A106', valor: '' },
+            { nombre: 'normativa', etiqueta: 'Normativa', tipo: 'text', placeholder: 'ASME B31.3', valor: 'ASME B31.3' },
+            { nombre: 'unidades', etiqueta: 'Sistema de unidades', tipo: 'select', opciones: ['Sistema Internacional (SI)', 'Sistema Imperial (US)'], valor: 'Sistema Internacional (SI)' },
+            { nombre: 'supuestos', etiqueta: 'Si falta información', tipo: 'select', opciones: ['Indicar supuestos explícitamente y marcarlos', 'Detenerme y preguntar antes de asumir'], valor: 'Indicar supuestos explícitamente y marcarlos' }
+        ],
+        promptTemplate: 'Actúa como ingeniero de tuberías (piping engineer) senior. Calcula el dimensionamiento preliminar de una línea que transporta {fluido} con caudal {caudal} y presión de diseño {presion_diseno}, en tubería de {material_tuberia}, conforme a {normativa}. Unidades: {unidades}. Desarrolla el cálculo paso a paso: velocidad, diámetro recomendado, caída de presión estimada y espesor mínimo de pared. Si falta información crítica: {supuestos}. Cierra con una sección "Supuestos y verificación" que confirme la consistencia de unidades y resultados.'
+    },
+    {
+        id: 'balance-masa-energia',
+        categoria: 'Ingeniería y ciencias',
+        titulo: 'Balance de masa y energía',
+        descripcion: 'Desarrolla un balance de masa y energía de un proceso, paso a paso.',
+        icono: '⚖️',
+        campos: [
+            { nombre: 'proceso', etiqueta: 'Proceso', tipo: 'text', placeholder: 'Intercambiador de calor', valor: '' },
+            { nombre: 'entradas', etiqueta: 'Corrientes de entrada', tipo: 'textarea', placeholder: 'Corriente 1: 100 kg/h a 80°C...', valor: '' },
+            { nombre: 'salidas', etiqueta: 'Corrientes de salida', tipo: 'textarea', placeholder: 'Corriente 2: ...', valor: '' },
+            { nombre: 'unidades', etiqueta: 'Sistema de unidades', tipo: 'select', opciones: ['Sistema Internacional (SI)', 'Sistema Imperial (US)'], valor: 'Sistema Internacional (SI)' },
+            { nombre: 'supuestos', etiqueta: 'Si falta información', tipo: 'select', opciones: ['Indicar supuestos explícitamente y marcarlos', 'Detenerme y preguntar antes de asumir'], valor: 'Indicar supuestos explícitamente y marcarlos' }
+        ],
+        promptTemplate: 'Como ingeniero de procesos, realiza un balance de masa y energía para "{proceso}". Corrientes de entrada: {entradas}. Corrientes de salida: {salidas}. Unidades: {unidades}. Desarrolla el balance paso a paso, indicando las ecuaciones utilizadas, y verifica el cierre del balance. Si falta información crítica: {supuestos}. Finaliza con una tabla resumen y una sección "Supuestos y verificación".'
+    },
+
+    // ==================== OPERACIONES INDUSTRIALES Y SEGURIDAD ====================
+    {
+        id: 'analisis-hazop',
+        categoria: 'Operaciones industriales y seguridad',
+        titulo: 'Análisis HAZOP / matriz de riesgos',
+        descripcion: 'Genera un análisis de riesgos de proceso (HAZOP, What-If, Bow-Tie o FMEA).',
+        icono: '⚠️',
+        campos: [
+            { nombre: 'proceso_equipo', etiqueta: 'Proceso o equipo', tipo: 'text', placeholder: 'Reactor de mezcla', valor: '' },
+            { nombre: 'nodos', etiqueta: 'Nodos / escenarios a evaluar', tipo: 'textarea', placeholder: 'Nodo 1: línea de alimentación de reactivo...', valor: '' },
+            { nombre: 'metodologia', etiqueta: 'Metodología', tipo: 'select', opciones: ['HAZOP', 'What-If', 'Bow-Tie', 'FMEA'], valor: 'HAZOP' },
+            { nombre: 'formato', etiqueta: 'Formato', tipo: 'select', opciones: ['Tabla', 'Markdown'], valor: 'Tabla' }
+        ],
+        promptTemplate: 'Actúa como facilitador de seguridad de procesos certificado. Realiza un análisis de riesgos tipo {metodologia} para "{proceso_equipo}". Nodos/escenarios a evaluar: {nodos}. Para cada nodo identifica: palabra guía o modo de falla, causas, consecuencias, salvaguardas existentes y recomendaciones. Formato: {formato}. No asumas salvaguardas que no se mencionaron; márcalas como "a verificar en campo".'
+    },
+    {
+        id: 'gestion-cambio-moc',
+        categoria: 'Operaciones industriales y seguridad',
+        titulo: 'Gestión del cambio técnico (MOC)',
+        descripcion: 'Redacta una solicitud de gestión del cambio (Management of Change).',
+        icono: '🔄',
+        campos: [
+            { nombre: 'cambio_propuesto', etiqueta: 'Cambio propuesto', tipo: 'textarea', placeholder: 'Reemplazo de válvula manual por automática...', valor: '' },
+            { nombre: 'razon', etiqueta: 'Razón del cambio', tipo: 'text', placeholder: 'Reducir tiempo de respuesta ante fugas', valor: '' },
+            { nombre: 'areas_impactadas', etiqueta: 'Áreas potencialmente impactadas', tipo: 'textarea', placeholder: 'Operación, instrumentación, seguridad...', valor: '' },
+            { nombre: 'formato', etiqueta: 'Formato', tipo: 'select', opciones: ['Markdown', 'Tabla'], valor: 'Markdown' }
+        ],
+        promptTemplate: 'Actúa como responsable de gestión del cambio (Management of Change). Redacta una solicitud de MOC para el siguiente cambio: {cambio_propuesto}. Razón del cambio: {razon}. Áreas potencialmente impactadas: {areas_impactadas}. Formato: {formato}. Incluye: descripción del cambio, justificación, análisis de riesgo del cambio (temporal/permanente), requisitos de capacitación, actualización de documentación y checklist de cierre.'
+    },
+    {
+        id: 'procedimiento-operativo',
+        categoria: 'Operaciones industriales y seguridad',
+        titulo: 'Procedimiento operativo estándar (SOP)',
+        descripcion: 'Elabora un procedimiento operativo estándar estructurado.',
+        icono: '📋',
+        campos: [
+            { nombre: 'proceso', etiqueta: 'Proceso', tipo: 'text', placeholder: 'Arranque de compresor', valor: '' },
+            { nombre: 'equipo', etiqueta: 'Equipo', tipo: 'text', placeholder: 'Compresor C-101', valor: '' },
+            { nombre: 'pasos_criticos', etiqueta: 'Pasos críticos conocidos', tipo: 'textarea', placeholder: 'Verificar presión de succión...', valor: '' },
+            { nombre: 'normativa_seguridad', etiqueta: 'Normativa de seguridad aplicable', tipo: 'text', placeholder: 'LOTO, NFPA...', valor: '' },
+            { nombre: 'formato', etiqueta: 'Formato', tipo: 'select', opciones: ['Markdown', 'Word'], valor: 'Markdown' }
+        ],
+        promptTemplate: 'Actúa como ingeniero de procesos redactando documentación operativa. Elabora un Procedimiento Operativo Estándar (SOP) para "{proceso}" en el equipo {equipo}. Pasos críticos conocidos: {pasos_criticos}. Normativa de seguridad aplicable: {normativa_seguridad}. Formato: {formato}. Estructura: objetivo, alcance, EPP requerido, pasos numerados con criterios de aceptación, riesgos y controles, y referencias.'
+    },
+    {
+        id: 'plan-mantenimiento',
+        categoria: 'Operaciones industriales y seguridad',
+        titulo: 'Plan de mantenimiento preventivo',
+        descripcion: 'Genera un plan de mantenimiento preventivo por criticidad y frecuencia.',
+        icono: '🔧',
+        campos: [
+            { nombre: 'equipo', etiqueta: 'Equipo', tipo: 'text', placeholder: 'Motor eléctrico M-203', valor: '' },
+            { nombre: 'criticidad', etiqueta: 'Criticidad', tipo: 'select', opciones: ['Alta', 'Media', 'Baja'], valor: 'Media' },
+            { nombre: 'frecuencia', etiqueta: 'Frecuencia base', tipo: 'text', placeholder: 'Mensual, trimestral...', valor: '' },
+            { nombre: 'tareas', etiqueta: 'Tareas conocidas o requeridas', tipo: 'textarea', placeholder: 'Lubricación, medición de vibración...', valor: '' },
+            { nombre: 'formato', etiqueta: 'Formato', tipo: 'select', opciones: ['Tabla', 'Markdown'], valor: 'Tabla' }
+        ],
+        promptTemplate: 'Actúa como ingeniero de confiabilidad y mantenimiento. Elabora un plan de mantenimiento preventivo para {equipo}, con criticidad {criticidad} y frecuencia base {frecuencia}. Tareas conocidas o requeridas: {tareas}. Formato: {formato}. Incluye: tareas por frecuencia (diaria/semanal/mensual/anual según aplique), repuestos críticos sugeridos, tiempo estimado por tarea y criterios de aceptación.'
+    },
+    {
+        id: 'informe-inspeccion',
+        categoria: 'Operaciones industriales y seguridad',
+        titulo: 'Informe de inspección / no conformidad',
+        descripcion: 'Redacta un informe de inspección técnica o hallazgo de no conformidad.',
+        icono: '🔎',
+        campos: [
+            { nombre: 'activo', etiqueta: 'Activo inspeccionado', tipo: 'text', placeholder: 'Tanque de almacenamiento TK-05', valor: '' },
+            { nombre: 'hallazgos', etiqueta: 'Hallazgos observados', tipo: 'textarea', placeholder: 'Corrosión en soldadura, espesor por debajo de mínimo...', valor: '' },
+            { nombre: 'normativa', etiqueta: 'Normativa de referencia', tipo: 'text', placeholder: 'API 653', valor: '' },
+            { nombre: 'severidad', etiqueta: 'Severidad', tipo: 'select', opciones: ['Crítica', 'Mayor', 'Menor', 'Observación'], valor: 'Mayor' },
+            { nombre: 'formato', etiqueta: 'Formato', tipo: 'select', opciones: ['Markdown', 'Tabla'], valor: 'Markdown' }
+        ],
+        promptTemplate: 'Actúa como inspector técnico QA/QC. Redacta un informe de inspección para {activo}. Hallazgos observados: {hallazgos}. Normativa de referencia: {normativa}. Clasificación de severidad: {severidad}. Formato: {formato}. Incluye: descripción del hallazgo, evidencia objetiva, norma incumplida (si aplica), acción correctiva recomendada y plazo sugerido.'
+    },
+    {
+        id: 'informe-puesta-marcha',
+        categoria: 'Operaciones industriales y seguridad',
+        titulo: 'Informe de puesta en marcha (commissioning)',
+        descripcion: 'Documenta los resultados de pruebas de puesta en marcha de un sistema.',
+        icono: '🚀',
+        campos: [
+            { nombre: 'sistema', etiqueta: 'Sistema', tipo: 'text', placeholder: 'Sistema de bombeo contra incendio', valor: '' },
+            { nombre: 'pruebas_realizadas', etiqueta: 'Pruebas realizadas', tipo: 'textarea', placeholder: 'Prueba de presión, prueba funcional...', valor: '' },
+            { nombre: 'criterios_aceptacion', etiqueta: 'Criterios de aceptación', tipo: 'textarea', placeholder: 'Presión mínima 10 bar sostenida 30 min...', valor: '' },
+            { nombre: 'formato', etiqueta: 'Formato', tipo: 'select', opciones: ['Markdown', 'Tabla'], valor: 'Markdown' }
+        ],
+        promptTemplate: 'Actúa como ingeniero de comisionamiento (commissioning). Redacta un informe de puesta en marcha para el sistema {sistema}. Pruebas realizadas: {pruebas_realizadas}. Criterios de aceptación: {criterios_aceptacion}. Formato: {formato}. Incluye: alcance de las pruebas, resultados obtenidos vs. criterios, no conformidades encontradas, y estado final (aprobado / aprobado con observaciones / rechazado).'
+    },
+
+    // ==================== GESTIÓN DE PROYECTOS ====================
+    {
+        id: 'rfq-tecnico',
+        categoria: 'Gestión de proyectos',
+        titulo: 'Solicitud de cotización técnica (RFQ)',
+        descripcion: 'Redacta una RFQ estructurada para proveedores.',
+        icono: '📨',
+        campos: [
+            { nombre: 'item_servicio', etiqueta: 'Ítem o servicio', tipo: 'text', placeholder: 'Válvulas de control 6"', valor: '' },
+            { nombre: 'especificaciones', etiqueta: 'Especificaciones técnicas requeridas', tipo: 'textarea', placeholder: 'Material, presión, conexión...', valor: '' },
+            { nombre: 'plazo_entrega', etiqueta: 'Plazo de entrega esperado', tipo: 'text', placeholder: '8 semanas', valor: '' },
+            { nombre: 'criterios_evaluacion', etiqueta: 'Criterios de evaluación de ofertas', tipo: 'textarea', placeholder: 'Precio, plazo, garantía...', valor: '' },
+            { nombre: 'formato', etiqueta: 'Formato', tipo: 'select', opciones: ['Markdown', 'Word'], valor: 'Markdown' }
+        ],
+        promptTemplate: 'Actúa como comprador técnico / ingeniero de proyecto. Redacta una solicitud de cotización (RFQ) para {item_servicio}. Especificaciones técnicas requeridas: {especificaciones}. Plazo de entrega esperado: {plazo_entrega}. Criterios de evaluación de ofertas: {criterios_evaluacion}. Formato: {formato}. Incluye: alcance, requisitos técnicos obligatorios vs. deseables, documentación a exigir al proveedor, y estructura esperada de la oferta.'
+    },
+    {
+        id: 'benchmark-proveedores',
+        categoria: 'Gestión de proyectos',
+        titulo: 'Comparativa técnica de proveedores/tecnologías',
+        descripcion: 'Compara opciones técnicas o proveedores según criterios definidos.',
+        icono: '📊',
+        campos: [
+            { nombre: 'opciones', etiqueta: 'Opciones a comparar', tipo: 'textarea', placeholder: 'Proveedor A, Proveedor B, Tecnología X...', valor: '' },
+            { nombre: 'criterios', etiqueta: 'Criterios de comparación', tipo: 'textarea', placeholder: 'Costo, garantía, disponibilidad, soporte técnico...', valor: '' },
+            { nombre: 'formato', etiqueta: 'Formato', tipo: 'select', opciones: ['Tabla comparativa', 'Matriz ponderada'], valor: 'Tabla comparativa' }
+        ],
+        promptTemplate: 'Actúa como consultor técnico independiente. Compara las siguientes opciones: {opciones}, según los criterios: {criterios}. Formato: {formato}. Si el formato es "Matriz ponderada", propone pesos razonables para cada criterio y justifica brevemente el peso asignado. Señala explícitamente cuando no tengas datos suficientes de una opción, en vez de inventar cifras.'
+    },
+    {
+        id: 'acta-reunion-tecnica',
+        categoria: 'Gestión de proyectos',
+        titulo: 'Acta de reunión técnica',
+        descripcion: 'Genera el acta formal de una reunión técnica de proyecto.',
+        icono: '🗒️',
+        campos: [
+            { nombre: 'proyecto', etiqueta: 'Proyecto', tipo: 'text', placeholder: 'Ampliación planta de tratamiento', valor: '' },
+            { nombre: 'asistentes', etiqueta: 'Asistentes', tipo: 'textarea', placeholder: 'Nombre - Rol...', valor: '' },
+            { nombre: 'temas_tratados', etiqueta: 'Temas tratados', tipo: 'textarea', placeholder: 'Avance de ingeniería, riesgos identificados...', valor: '' },
+            { nombre: 'acuerdos', etiqueta: 'Acuerdos y compromisos', tipo: 'textarea', placeholder: 'Responsable - Fecha...', valor: '' },
+            { nombre: 'formato', etiqueta: 'Formato', tipo: 'select', opciones: ['Markdown', 'Word'], valor: 'Markdown' }
+        ],
+        promptTemplate: 'Redacta el acta de una reunión técnica del proyecto "{proyecto}". Asistentes: {asistentes}. Temas tratados: {temas_tratados}. Acuerdos y compromisos: {acuerdos}. Formato: {formato}. Estructura: objetivo de la reunión (marca "no especificado" si no se indicó), temas discutidos, decisiones tomadas, compromisos con responsable y fecha, y próximos pasos.'
+    },
+    {
+        id: 'justificacion-capex-opex',
+        categoria: 'Gestión de proyectos',
+        titulo: 'Justificación técnico-económica (CAPEX/OPEX)',
+        descripcion: 'Elabora la justificación técnico-económica de una inversión de proyecto.',
+        icono: '💰',
+        campos: [
+            { nombre: 'proyecto', etiqueta: 'Proyecto', tipo: 'text', placeholder: 'Automatización de línea de envasado', valor: '' },
+            { nombre: 'inversion_estimada', etiqueta: 'Inversión estimada (CAPEX)', tipo: 'text', placeholder: '$150,000 USD', valor: '' },
+            { nombre: 'beneficio_ahorro', etiqueta: 'Beneficios/ahorros esperados', tipo: 'textarea', placeholder: 'Reducción de horas-hombre, menor scrap...', valor: '' },
+            { nombre: 'horizonte_evaluacion', etiqueta: 'Horizonte de evaluación', tipo: 'text', placeholder: '5 años', valor: '' },
+            { nombre: 'formato', etiqueta: 'Formato', tipo: 'select', opciones: ['Markdown', 'Word'], valor: 'Markdown' }
+        ],
+        promptTemplate: 'Actúa como ingeniero de proyectos con visión financiera. Elabora la justificación técnico-económica para "{proyecto}". Inversión estimada (CAPEX): {inversion_estimada}. Beneficios/ahorros esperados (impacto en OPEX): {beneficio_ahorro}. Horizonte de evaluación: {horizonte_evaluacion}. Formato: {formato}. Incluye: resumen del problema, alternativa propuesta, estimación de retorno (ROI o payback simple), riesgos del proyecto y recomendación. Aclara que las cifras son estimaciones sujetas a validación financiera formal.'
+    },
+    {
+        id: 'requisitos-usuario-urs',
+        categoria: 'Gestión de proyectos',
+        titulo: 'Especificación de requisitos de usuario (URS)',
+        descripcion: 'Redacta un documento URS con requisitos numerados y clasificados.',
+        icono: '📑',
+        campos: [
+            { nombre: 'sistema', etiqueta: 'Sistema', tipo: 'text', placeholder: 'Sistema SCADA de planta', valor: '' },
+            { nombre: 'requisitos_funcionales', etiqueta: 'Requisitos funcionales conocidos', tipo: 'textarea', placeholder: 'Debe permitir monitoreo en tiempo real...', valor: '' },
+            { nombre: 'requisitos_no_funcionales', etiqueta: 'Requisitos no funcionales', tipo: 'textarea', placeholder: 'Desempeño, seguridad, normativa...', valor: '' },
+            { nombre: 'formato', etiqueta: 'Formato', tipo: 'select', opciones: ['Tabla', 'Markdown'], valor: 'Tabla' }
+        ],
+        promptTemplate: 'Actúa como ingeniero de requisitos. Elabora un documento de Especificación de Requisitos de Usuario (URS) para el sistema "{sistema}". Requisitos funcionales conocidos: {requisitos_funcionales}. Requisitos no funcionales (desempeño, seguridad, normativa): {requisitos_no_funcionales}. Formato: {formato}. Numera cada requisito con un identificador único (ej. URS-001) y clasifícalo como obligatorio o deseable.'
+    },
+    {
+        id: 'cronograma-wbs',
+        categoria: 'Gestión de proyectos',
+        titulo: 'Cronograma / EDT de proyecto (WBS)',
+        descripcion: 'Genera una Estructura de Desglose del Trabajo y cronograma de alto nivel.',
+        icono: '🗓️',
+        campos: [
+            { nombre: 'proyecto', etiqueta: 'Proyecto', tipo: 'text', placeholder: 'Construcción de nueva línea de producción', valor: '' },
+            { nombre: 'fases', etiqueta: 'Fases principales', tipo: 'textarea', placeholder: 'Ingeniería, procura, construcción, puesta en marcha...', valor: '' },
+            { nombre: 'duracion_estimada', etiqueta: 'Duración total estimada', tipo: 'text', placeholder: '12 meses', valor: '' },
+            { nombre: 'formato', etiqueta: 'Formato', tipo: 'select', opciones: ['Tabla', 'Lista jerárquica', 'Markdown'], valor: 'Tabla' }
+        ],
+        promptTemplate: 'Actúa como planificador de proyectos (project scheduler). Desarrolla una Estructura de Desglose del Trabajo (EDT/WBS) y cronograma de alto nivel para "{proyecto}". Fases principales: {fases}. Duración total estimada: {duracion_estimada}. Formato: {formato}. Incluye para cada fase: entregables clave, duración estimada y dependencias principales entre fases. Indica cuando una estimación es preliminar y requiere validación del equipo de planificación.'
+    },
+
+    // ==================== IMAGEN Y VIDEO ====================
     {
         id: 'imagen-conceptual',
         categoria: 'Imagen y video',
@@ -166,6 +406,8 @@ const plantillasSeed = [
         ],
         promptTemplate: 'Crea video de {duracion} sobre "{tema}". Escenas: {escenas}. Audio: {audio}. Transiciones: {transiciones}. Estilo cinematográfico, alta definición.'
     },
+
+    // ==================== NEGOCIOS Y ANÁLISIS ====================
     {
         id: 'analisis-foda',
         categoria: 'Negocios y análisis',
