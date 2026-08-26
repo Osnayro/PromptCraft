@@ -434,21 +434,154 @@ window.plantillasSeed = [
             { nombre: 'tono', etiqueta: 'Tono', tipo: 'select', opciones: ['Persuasivo', 'Formal', 'Amigable'], valor: 'Persuasivo' }
         ],
         promptTemplate: 'Redacta propuesta comercial para {cliente} ofreciendo {servicio}. Beneficios: {beneficios}. Tono: {tono}. Incluye propuesta de valor, alcance, inversión y llamado a la acción.'
+    },
+
+    // ==================== IDENTIDAD VISUAL Y LOGOS ====================
+    // Esta categoría genera PROMPTS DE TEXTO para usar en IAs de imagen.
+    {
+        id: 'logo-corporativo',
+        categoria: 'Identidad Visual y Logos',
+        titulo: 'Logo Corporativo Minimalista',
+        descripcion: 'Genera un prompt para un logo de empresa limpio y profesional.',
+        icono: '🏢',
+        campos: [
+            { nombre: 'nombre_empresa', etiqueta: 'Nombre de la empresa', tipo: 'text', placeholder: 'Acme Solutions', valor: '' },
+            { nombre: 'industria', etiqueta: 'Industria/Sector', tipo: 'text', placeholder: 'Tecnología, Consultoría...', valor: '' },
+            { nombre: 'valores', etiqueta: 'Valores a transmitir', tipo: 'text', placeholder: 'Innovación, Confianza, Rapidez', valor: 'Innovación, Profesionalismo' },
+            { nombre: 'estilo', etiqueta: 'Estilo visual', tipo: 'select', opciones: ['Minimalista', 'Geométrico', 'Abstracto', 'Tipográfico (Wordmark)', 'Emblema/Escudo'], valor: 'Minimalista' },
+            { nombre: 'paleta', etiqueta: 'Paleta de colores', tipo: 'text', placeholder: 'Azul marino y blanco', valor: 'Colores corporativos' },
+            { nombre: 'fondo', etiqueta: 'Fondo', tipo: 'select', opciones: ['Blanco puro', 'Negro puro', 'Transparente (Alpha channel)', 'Color sólido'], valor: 'Blanco puro' }
+        ],
+        promptTemplate: 'Genera un prompt para crear un logo corporativo para "{nombre_empresa}", una empresa del sector {industria}. Estilo: {estilo}. Concepto: Debe transmitir {valores}. Paleta de colores: {paleta}. Diseño limpio, vectorial, de alta resolución, fondo {fondo}. Sin texto adicional, sin fotorealismo exagerado, enfocado en branding profesional.'
+    },
+    {
+        id: 'logo-mascota-gaming',
+        categoria: 'Identidad Visual y Logos',
+        titulo: 'Logo de Mascota / Gaming',
+        descripcion: 'Crea un prompt para un logo agresivo y dinámico tipo eSports.',
+        icono: '🎮',
+        campos: [
+            { nombre: 'animal_sujeto', etiqueta: 'Animal o Sujeto', tipo: 'text', placeholder: 'León, Vikingo, Robot...', valor: '' },
+            { nombre: 'expresion', etiqueta: 'Expresión/Ánimo', tipo: 'select', opciones: ['Agresivo', 'Serio', 'Poderoso', 'Carcajada'], valor: 'Poderoso' },
+            { nombre: 'estilo_grafico', etiqueta: 'Estilo Gráfico', tipo: 'select', opciones: ['Vectorial eSports', 'Ilustración 3D', 'Cel Shading', 'Manga'], valor: 'Vectorial eSports' },
+            { nombre: 'colores_neon', etiqueta: 'Colores Neón (opcional)', tipo: 'text', placeholder: 'Cian y Magenta', valor: '' },
+            { nombre: 'detalles', etiqueta: 'Detalles extra', tipo: 'text', placeholder: 'Sosteniendo un hacha, con armadura...', valor: '' }
+        ],
+        promptTemplate: 'Genera un prompt para un logo de mascota gaming que muestre un {animal_sujeto} con expresión {expresion}. Estilo visual: {estilo_grafico}. Detalles: {detalles}. Paleta de colores: agresiva y vibrante {colores_neon}. Fondo negro sólido para contraste. Alta resolución, detalles nítidos, diseñado para equipos de eSports.'
+    },
+
+    // ==================== ARQUITECTURA Y PLANOS ====================
+    // Genera PROMPTS DE TEXTO para IAs de imagen que visualizan conceptos arquitectónicos.
+    {
+        id: 'plano-arquitectonico-conceptual',
+        categoria: 'Arquitectura y Planos',
+        titulo: 'Plano Arquitectónico Conceptual (Floor Plan)',
+        descripcion: 'Genera una visualización artística de la distribución de una planta.',
+        icono: '🗺️',
+        campos: [
+            { nombre: 'tipo_propiedad', etiqueta: 'Tipo de Propiedad', tipo: 'text', placeholder: 'Casa moderna, Oficina...', valor: 'Casa moderna' },
+            { nombre: 'niveles', etiqueta: 'Número de niveles', tipo: 'number', placeholder: '1', valor: '1' },
+            { nombre: 'estilo_plano', etiqueta: 'Estilo del plano', tipo: 'select', opciones: ['Técnico 2D Blueprint', 'Render 3D Isométrico', 'Croquis a mano (Sketch)', 'Estilo CAD limpio'], valor: 'Render 3D Isométrico' },
+            { nombre: 'detalles_espacio', etiqueta: 'Espacios clave', tipo: 'textarea', placeholder: '3 habitaciones, cocina concepto abierto...', valor: '' },
+            { nombre: 'acabados', etiqueta: 'Acabados visuales', tipo: 'text', placeholder: 'Suelos de madera, paredes blancas...', valor: '' }
+        ],
+        promptTemplate: 'Genera una imagen que represente un plano arquitectónico conceptual de una {tipo_propiedad} de {niveles} nivel(es). Estilo: {estilo_plano}. Distribución: {detalles_espacio}. Incluye detalles de mobiliario básico, iluminación suave y acabados como {acabados}. Vista cenital o isométrica limpia, alta resolución, detalles nítidos como si fuera un plano de presentación inmobiliaria.'
+    },
+    {
+        id: 'render-fachada-exterior',
+        categoria: 'Arquitectura y Planos',
+        titulo: 'Render de Fachada Exterior',
+        descripcion: 'Visualización fotorrealista del exterior de un edificio.',
+        icono: '🏠',
+        campos: [
+            { nombre: 'estilo_arquitectonico', etiqueta: 'Estilo Arquitectónico', tipo: 'text', placeholder: 'Minimalista, Brutalista, Colonial...', valor: 'Minimalista moderno' },
+            { nombre: 'materiales', etiqueta: 'Materiales principales', tipo: 'text', placeholder: 'Hormigón visto, madera, vidrio...', valor: 'Hormigón, madera, grandes ventanales' },
+            { nombre: 'entorno', etiqueta: 'Entorno', tipo: 'select', opciones: ['Urbano', 'Bosque', 'Playa', 'Montaña'], valor: 'Urbano' },
+            { nombre: 'hora_dia', etiqueta: 'Hora del día / Luz', tipo: 'select', opciones: ['Mañana brillante', 'Atardecer (Golden Hour)', 'Noche iluminada', 'Nublado dramático'], valor: 'Atardecer (Golden Hour)' },
+            { nombre: 'detalles_paisajismo', etiqueta: 'Paisajismo', tipo: 'text', placeholder: 'Jardín seco, piscina infinita...', valor: 'Jardín moderno minimalista' }
+        ],
+        promptTemplate: 'Genera un render fotorrealista de la fachada exterior de un edificio {estilo_arquitectonico}. Materiales predominantes: {materiales}. Situado en un entorno de {entorno}. Iluminación: {hora_dia}. Incluye detalles de paisajismo como {detalles_paisajismo}. Alta resolución, 8K, detalles arquitectónicos nítidos, iluminación global coherente, fotografía de arquitectura profesional.'
+    },
+
+    // ==================== ELEMENTOS GRÁFICOS E ÍCONOS ====================
+    // Genera PROMPTS DE TEXTO para IAs de imagen.
+    {
+        id: 'icono-app-minimalista',
+        categoria: 'Elementos Gráficos e Íconos',
+        titulo: 'Ícono de Aplicación Minimalista',
+        descripcion: 'Crea un prompt para un ícono de app limpio (iOS/Android).',
+        icono: '📱',
+        campos: [
+            { nombre: 'funcion_app', etiqueta: 'Función de la App', tipo: 'text', placeholder: 'Productividad, Finanzas, Salud...', valor: '' },
+            { nombre: 'simbolo', etiqueta: 'Símbolo central', tipo: 'text', placeholder: 'Rayo, Gráfico de barras, Corazón...', valor: '' },
+            { nombre: 'estilo_icono', etiqueta: 'Estilo visual', tipo: 'select', opciones: ['Glifos planos (Flat)', 'Gradiente suave', 'Neumorfismo', '3D Clay (arcilla)', 'Línea fina'], valor: '3D Clay (arcilla)' },
+            { nombre: 'paleta_colores', etiqueta: 'Paleta de colores', tipo: 'text', placeholder: 'Azul vibrante a verde', valor: 'Colores frescos' },
+            { nombre: 'fondo', etiqueta: 'Fondo del cuadrado', tipo: 'select', opciones: ['Blanco sólido', 'Gradiente de fondo', 'Negro sólido'], valor: 'Blanco sólido' }
+        ],
+        promptTemplate: 'Genera un prompt para un ícono de aplicación móvil para {funcion_app}. Símbolo central: {simbolo}. Estilo visual: {estilo_icono}. Paleta de colores: {paleta_colores}. Fondo: cuadrado {fondo} con bordes redondeados (iOS style). Diseño vectorial, centrado, limpio, sin texto, alta resolución, enfocado en UI/UX moderna.'
+    },
+    {
+        id: 'set-iconos-interfaz',
+        categoria: 'Elementos Gráficos e Íconos',
+        titulo: 'Set de Íconos de Interfaz (UI)',
+        descripcion: 'Genera un prompt para una familia de íconos coherentes.',
+        icono: '🧩',
+        campos: [
+            { nombre: 'tematica_iconos', etiqueta: 'Temática del set', tipo: 'text', placeholder: 'Navegación web, E-commerce, Configuración...', valor: 'Navegación web' },
+            { nombre: 'cantidad', etiqueta: 'Cantidad aproximada', tipo: 'number', placeholder: '6-12', valor: '9' },
+            { nombre: 'estilo_linea', etiqueta: 'Estilo de línea/relleno', tipo: 'select', opciones: ['Línea fina (Outline)', 'Línea gruesa (Bold)', 'Relleno sólido (Filled)', 'Duotono', 'Color plano'], valor: 'Línea fina (Outline)' },
+            { nombre: 'paleta', etiqueta: 'Color principal', tipo: 'text', placeholder: 'Negro, Azul marino, Gris...', valor: 'Gris oscuro' }
+        ],
+        promptTemplate: 'Genera un prompt para crear un set de {cantidad} íconos de interfaz de usuario para {tematica_iconos}. Estilo: {estilo_linea}. Paleta de colores: {paleta} sobre fondo blanco puro. Coherencia visual estricta entre todos los íconos del set, diseño limpio, vectorial, alta resolución, grid organizado.'
+    },
+
+    // ==================== RECURSOS CREATIVOS Y ARTE ====================
+    // Amplía la categoría de imagen/video existente con usos más creativos.
+    {
+        id: 'patron-textura-sin-costuras',
+        categoria: 'Recursos Creativos y Arte',
+        titulo: 'Patrón / Textura sin costuras (Seamless)',
+        descripcion: 'Genera un prompt para texturas repetibles infinitamente.',
+        icono: '🏁',
+        campos: [
+            { nombre: 'tipo_patron', etiqueta: 'Tipo de patrón', tipo: 'text', placeholder: 'Geométrico moderna, Orgánico floral...', valor: 'Geométrico moderno' },
+            { nombre: 'elementos', etiqueta: 'Elementos clave', tipo: 'text', placeholder: 'Triángulos entrelazados, líneas hex...', valor: '' },
+            { nombre: 'colores', etiqueta: 'Paleta de colores', tipo: 'text', placeholder: 'Pasteles, Monocromo...', valor: 'Pasteles' },
+            { nombre: 'complejidad', etiqueta: 'Complejidad', tipo: 'select', opciones: ['Simple y minimalista', 'Detallado y complejo'], valor: 'Simple y minimalista' }
+        ],
+        promptTemplate: 'Genera un prompt para una textura o patrón sin costuras (seamless repeatable pattern) de estilo {tipo_patron}. Elementos: {elementos}. Paleta de colores: {colores}. Nivel de detalle: {complejidad}. Alta resolución, iluminación plana y uniforme para facilitar la repetición infinita.'
+    },
+    {
+        id: 'ilustracion-vectorial-plana',
+        categoria: 'Recursos Creativos y Arte',
+        titulo: 'Ilustración Vectorial Plana (Flat)',
+        descripcion: 'Prompt para ilustraciones de stock estilo web moderna.',
+        icono: '🖼️',
+        campos: [
+            { nombre: 'escena', etiqueta: 'Escena / Sujeto', tipo: 'text', placeholder: 'Equipo trabajando, Persona leyendo...', valor: '' },
+            { nombre: 'estilo_vector', etiqueta: 'Estilo Vectorial', tipo: 'select', opciones: ['Flat Design', 'Semi-Flat con sombras', 'Línea gruesa (Corporate art)', 'Minimalista'], valor: 'Semi-Flat con sombras' },
+            { nombre: 'colores_acento', etiqueta: 'Colores de acento', tipo: 'text', placeholder: 'Cian y Naranja corporativo', valor: 'Colores corporativos frescos' },
+            { nombre: 'fondo_escena', etiqueta: 'Fondo de la escena', tipo: 'select', opciones: ['Blanco limpio', 'Geométrico abstracto', 'Paisaje simplificado'], valor: 'Blanco limpio' }
+        ],
+        promptTemplate: 'Genera un prompt para una ilustración vectorial plana que muestre {escena}. Estilo: {estilo_vector}. Paleta de colores: {colores_acento}. Fondo: {fondo_escena}. Diseño limpio, vectorial, de alta resolución, enfocado en el uso para banners web o presentaciones corporativas modernas.'
     }
 ];
 
-async function sincronizarPlantillas() {
+window.sincronizarPlantillas = async function sincronizarPlantillas() {
     if (!window.db) {
         console.error('Firestore no disponible.');
         return;
     }
 
-    for (const plantilla of plantillasSeed) {
+    if (!Array.isArray(window.plantillasSeed) || window.plantillasSeed.length === 0) {
+        console.error('window.plantillasSeed no está definido. Vuelve a pegar el script completo antes de ejecutar sincronizarPlantillas().');
+        return;
+    }
+
+    for (const plantilla of window.plantillasSeed) {
         const { id, ...datos } = plantilla;
         await window.db.collection('plantillas').doc(id).set(datos, { merge: true });
     }
 
-    console.log(`✅ ${plantillasSeed.length} plantillas sincronizadas en Firestore.`);
-}
-
-window.sincronizarPlantillas = sincronizarPlantillas;
+    console.log(`✅ ${window.plantillasSeed.length} plantillas sincronizadas en Firestore.`);
+};
