@@ -16,7 +16,7 @@ const STATIC_ASSETS = [
     '/admin.js',
     '/firebase-config.js',
     '/manifest.json',
-    '/logo.PNG'
+    '/logo.jpg'
 ];
 
 // Instalación: cachear app shell y activar sin esperar
