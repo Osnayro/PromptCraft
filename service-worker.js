@@ -1,22 +1,22 @@
 
 /**
- * PromptCraft — Service Worker v2
+ * PromptCraft — Service Worker v3
  * Soporte offline para archivos estáticos (App Shell).
  * No cachea respuestas de Firebase Firestore.
  */
 
-const CACHE_NAME = 'promptcraft-v2';
+const CACHE_NAME = 'promptcraft-v3';
 
 const STATIC_ASSETS = [
-    './',
-    './index.html',
-    './admin.html',
-    './styles.css',
-    './app.js',
-    './admin.js',
-    './firebase-config.js',
-    './manifest.json',
-    './logo.PNG'
+    '/',
+    '/index.html',
+    '/admin.html',
+    '/styles.css',
+    '/app.js',
+    '/admin.js',
+    '/firebase-config.js',
+    '/manifest.json',
+    '/logo.PNG'
 ];
 
 // Instalación: cachear app shell y activar sin esperar
@@ -58,7 +58,10 @@ self.addEventListener('fetch', (event) => {
                     caches.open(CACHE_NAME).then(cache => cache.put(request, clone));
                 }
                 return response;
-            }).catch(() => cached);
+            }).catch(() => {
+                // Si no hay red y no hay copia en caché, devolvemos la página principal
+                return caches.match('/index.html');
+            });
         })
     );
 });
