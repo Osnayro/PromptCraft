@@ -2,131 +2,132 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="PromptCraft — genera prompts profesionales para interactuar con modelos de IA en distintos casos y situaciones.">
-    <title>PromptCraft — Generador de Prompts para IA</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#1E3A63">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="PromptCraft">
-    <link rel="apple-touch-icon" href="logo.PNG">
-    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="PromptCraft — genera prompts profesionales para interactuar con modelos de IA en distintos casos y situaciones.">
+    <title>PromptCraft — Generador de Prompts para IA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1E3A63">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="PromptCraft">
+    <link rel="apple-touch-icon" href="logo.jpg">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <noscript>Esta aplicación requiere JavaScript para funcionar.</noscript>
+    <noscript>Esta aplicación requiere JavaScript para funcionar.</noscript>
 
-    <!-- ============================================================ -->
-    <!-- PANTALLA DE AUTENTICACIÓN CON GOOGLE -->
-    <!-- ============================================================ -->
-    <div id="auth-screen" class="fullscreen-overlay">
-        <div class="activation-card">
-            <img src="logo.PNG" alt="PromptCraft Logo" class="activation-logo">
-            <h1 class="activation-title">PromptCraft</h1>
-            <p class="activation-subtitle">Genera prompts profesionales para inteligencia artificial</p>
+    <!-- ============================================================ -->
+    <!-- PANTALLA DE AUTENTICACIÓN CON GOOGLE -->
+    <!-- ============================================================ -->
+    <div id="auth-screen" class="fullscreen-overlay">
+        <div class="activation-card">
+            <img src="logo.jpg" alt="PromptCraft Logo" class="activation-logo">
+            <h1 class="activation-title">PromptCraft</h1>
+            <p class="activation-subtitle">Genera prompts profesionales para inteligencia artificial</p>
 
-            <button id="google-login-btn" class="main-btn google-btn">
-                🚀 Iniciar sesión con Google
-            </button>
+            <button id="google-login-btn" class="main-btn google-btn">
+                🚀 Iniciar sesión con Google
+            </button>
 
-            <div id="auth-error" class="token-error" role="alert"></div>
+            <div id="auth-error" class="token-error" role="alert"></div>
 
-            <p class="activation-note">Solo usuarios autorizados pueden acceder a la aplicación.</p>
-        </div>
-    </div>
+            <p class="activation-note">Solo usuarios autorizados pueden acceder a la aplicación.</p>
+        </div>
+    </div>
 
-    <!-- ============================================================ -->
-    <!-- APP PRINCIPAL -->
-    <!-- ============================================================ -->
-    <div id="main-app" class="app-container" style="display:none;">
-        <!-- Header -->
-        <header class="app-header">
-            <img src="logo.PNG" alt="PromptCraft" class="header-logo">
-            <div class="header-info">
-                <h1>PromptCraft</h1>
-                <p>Generador de prompts especializados</p>
-            </div>
-            <button id="btn-logout" class="header-logout" title="Cerrar sesión" aria-label="Cerrar sesión">🚪</button>
-        </header>
+    <!-- ============================================================ -->
+    <!-- APP PRINCIPAL -->
+    <!-- ============================================================ -->
+    <div id="main-app" class="app-container" style="display:none;">
+        <!-- Header -->
+        <header class="app-header">
+            <img src="logo.jpg" alt="PromptCraft" class="header-logo">
+            <div class="header-info">
+                <h1>PromptCraft</h1>
+                <p>Generador de prompts especializados</p>
+            </div>
+            <button id="btn-logout" class="header-logout" title="Cerrar sesión" aria-label="Cerrar sesión">🚪</button>
+        </header>
 
-        <!-- Contenido principal -->
-        <main class="main-content">
-            <!-- Columna izquierda: selector y formulario -->
-            <section class="form-panel">
-                <h2 class="panel-title">📚 Plantillas</h2>
+        <!-- Contenido principal -->
+        <main class="main-content">
+            <!-- Columna izquierda: selector y formulario -->
+            <section class="form-panel">
+                <h2 class="panel-title">📚 Plantillas</h2>
 
-                <!-- Selector de categoría -->
-                <div class="form-group">
-                    <label for="categoria-select">Categoría</label>
-                    <select id="categoria-select">
-                        <option value="">Cargando categorías...</option>
-                    </select>
-                </div>
+                <!-- Selector de categoría -->
+                <div class="form-group">
+                    <label for="categoria-select">Categoría</label>
+                    <select id="categoria-select">
+                        <option value="">Cargando categorías...</option>
+                    </select>
+                </div>
 
-                <!-- Lista de plantillas de la categoría -->
-                <div id="plantillas-list" class="plantillas-list">
-                    <p class="loading-message">Cargando plantillas...</p>
-                </div>
+                <!-- Lista de plantillas de la categoría -->
+                <div id="plantillas-list" class="plantillas-list">
+                    <p class="loading-message">Cargando plantillas...</p>
+                </div>
 
-                <!-- Formulario dinámico de la plantilla seleccionada -->
-                <div id="form-container" class="form-container">
-                    <p class="empty-message">Selecciona una plantilla para comenzar.</p>
-                </div>
+                <!-- Formulario dinámico de la plantilla seleccionada -->
+                <div id="form-container" class="form-container">
+                    <p class="empty-message">Selecciona una plantilla para comenzar.</p>
+                </div>
 
-                <!-- Aviso de campos vacíos -->
-                <div id="campos-warning" class="campos-warning" role="alert" style="display:none;"></div>
+                <!-- Aviso de campos vacíos -->
+                <div id="campos-warning" class="campos-warning" role="alert" style="display:none;"></div>
 
-                <!-- Botón para generar prompt -->
-                <button id="btn-generar-prompt" class="main-btn" style="margin-top: 16px;">
-                    Generar Prompt ⚡
-                </button>
-            </section>
+                <!-- Botón para generar prompt -->
+                <button id="btn-generar-prompt" class="main-btn" style="margin-top: 16px;">
+                    Generar Prompt ⚡
+                </button>
+            </section>
 
-            <!-- Columna derecha: vista previa del prompt -->
-            <section class="preview-panel">
-                <h2>✨ Prompt generado</h2>
+            <!-- Columna derecha: vista previa del prompt -->
+            <section class="preview-panel">
+                <h2>✨ Prompt generado</h2>
 
-                <div id="prompt-preview" class="prompt-preview">
-                    <p class="empty-message">El prompt aparecerá aquí...</p>
-                </div>
+                <div id="prompt-preview" class="prompt-preview">
+                    <p class="empty-message">El prompt aparecerá aquí...</p>
+                </div>
 
-                <button id="btn-copy-prompt" class="main-btn">📋 Copiar prompt</button>
-                <button id="btn-download-prompt" class="secondary-btn">💾 Descargar .txt</button>
-                <button id="btn-share-prompt" class="secondary-btn">📤 Compartir</button>
-            </section>
-        </main>
+                <button id="btn-copy-prompt" class="main-btn">📋 Copiar prompt</button>
+                <button id="btn-download-prompt" class="secondary-btn">💾 Descargar .txt</button>
+                <button id="btn-share-prompt" class="secondary-btn">📤 Compartir</button>
+            </section>
+        </main>
 
-        <!-- Footer -->
-        <footer class="app-footer">
-            <p>Desarrollado por Romeroweb</p>
-        </footer>
-    </div>
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>Desarrollado por Romeroweb</p>
+        </footer>
+    </div>
 
-    <!-- ============================================================ -->
-    <!-- SCRIPTS -->
-    <!-- ============================================================ -->
-    <!-- Firebase SDK (App, Firestore y Auth) -->
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <!-- ============================================================ -->
+    <!-- SCRIPTS -->
+    <!-- ============================================================ -->
+    <!-- Firebase SDK (App, Firestore y Auth) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 
-    <!-- Configuración Firebase -->
-    <script src="firebase-config.js"></script>
+    <!-- Configuración Firebase -->
+    <script src="firebase-config.js"></script>
 
-    <!-- Lógica principal -->
-    <script src="app.js"></script>
+    <!-- Lógica principal -->
+    <script src="app.js"></script>
 
-    <!-- Registro del Service Worker -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./service-worker.js')
-                    .then(reg => console.log('PromptCraft SW registrado'))
-                    .catch(err => console.error('Error SW:', err));
-            });
-        }
-    </script>
+    <!-- Registro del Service Worker -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./service-worker.js')
+                    .then(reg => console.log('PromptCraft SW registrado'))
+                    .catch(err => console.error('Error SW:', err));
+            });
+        }
+    </script>
 </body>
 </html>
+
